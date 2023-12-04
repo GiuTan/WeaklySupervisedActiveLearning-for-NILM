@@ -43,7 +43,7 @@ class DataGenerator(object):
 
     def load_data(self):
         """
-        Load data (aggregate + strong labels) from resampled_REFIT_test.
+        Load data (aggregate + strong labels).
         """
         # Get files
         agg_files = natsorted(
