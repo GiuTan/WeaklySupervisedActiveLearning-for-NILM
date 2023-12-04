@@ -1,3 +1,8 @@
+"""
+@Author: Tamara Sobot
+@Date: December 2023
+"""
+
 import os.path
 from AL_acquisition_functions import *
 
@@ -76,7 +81,8 @@ class ALLoop:
         Training procedure of the model.
         :return:
         """
-        self.model.train()
+
+        pass
 
     def test(self):
         """
@@ -84,6 +90,6 @@ class ALLoop:
         :return:
         """
 
-        metrics = self.model.test()
+        metrics = None
 
         return metrics

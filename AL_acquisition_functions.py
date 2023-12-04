@@ -1,5 +1,9 @@
+"""
+@Author: Tamara Sobot
+@Date: December 2023
+"""
+
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def random_query(generator, args):
@@ -20,12 +24,10 @@ def pool_based_uncertainty(model, generator, args, al_iteration):
     Query samples from query pool based on uncertainty.
     """
 
-    output_threshold = [0.5, 0.5, 0.5]  # adjust for the special case, depending on the output dimensions.
-
     output = model.predict(x=generator.x[generator.query_pool_indices])
 
     # adjust for the special case.
-    confidence = np.abs(output - output_threshold)
+    confidence = np.abs(output - args.output_threshold)
 
     mean_confidence = np.mean(confidence, axis=-1)
     mean_confidence = np.squeeze(mean_confidence)

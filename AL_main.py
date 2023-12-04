@@ -1,49 +1,16 @@
+"""
+@Author: Tamara Sobot
+@Date: December 2023
+"""
+
 import argparse
-import os
-import logging
-import platform
-from datetime import datetime
 import random as python_random
 import numpy as np
 import tensorflow as tf
 
 from dummies import DummyModel, DummyDataGenerator
 from AL_Loop import ALLoop
-
-
-def get_filename(path):
-    path = os.path.realpath(path)
-    na_ext = path.split('\\')[-1]
-    na = os.path.splitext(na_ext)[0]
-    return na
-
-
-def allocate_experiment_id_alt(log_dir):
-    return datetime.now().strftime('%Y%m%d_%H%M%S-{}-{}').format(platform.node(), os.getpid())
-
-
-def create_logging(log_dir, filemode):
-
-    if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
-
-    exp_id = allocate_experiment_id_alt(log_dir)
-
-    log_path = os.path.join(log_dir, "%s.log" % exp_id)
-    logging.basicConfig(level=logging.INFO,  # DEBUG,
-                        format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                        datefmt='%a, %d %b %Y %H:%M:%S',
-                        filename=log_path,
-                        filemode=filemode)
-
-    # Print to console
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
-    console.setFormatter(formatter)
-    logging.getLogger('').addHandler(console)
-
-    return logging
+from utils import *
 
 
 if __name__ == "__main__":
@@ -52,8 +19,9 @@ if __name__ == "__main__":
 
     # General arguments
     parser.add_argument("--data-path", type=str, required=True)
-    parser.add_argument("--lr", type=float, default=1e-3)
-    parser.add_argument("--batch-size", type=int, default=128)
+    parser.add_argument("--lr", type=float, default=2e-3)
+    parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--house", type=int, default=2)
 
     # Active learning arguments
     parser.add_argument("--acquisition-function", type=str, default='random')
@@ -81,8 +49,9 @@ if __name__ == "__main__":
     os.environ['TF_DETERMINISTIC_OPS'] = '1'
     os.environ['TF_CUDNN_DETERMINISTIC'] = '1'
 
-    model = DummyModel(args)
-    data_generator = DummyDataGenerator(args)
+    model = DummyModel(args)  # modify for special model
+    data_generator = DummyDataGenerator(args)  # modify for special data
+    args.output_threshold = [0.5]  # modify for special data
 
     # Remove existing indices train/pool/test if there are any
     if os.path.exists(args.indices_path):
