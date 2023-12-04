@@ -6,3 +6,20 @@ Tanoni, G., Sobot, T., Principi, E., Stankovic, V., Stankovic, L. and Squartini,
 If you use this code, please cite the paper above.
 
 To use provided CRNN (or another) model inside the active learning framework, model and data generator creation should be set appropriately in AL_main.py. ALso, training and testing procedures should be set appropriately in AL_loop.py.
+
+Data chould be structured in a directory as follows:
+ --(data_dir)
+     --agg
+       --house_(# of house)
+         --(filename).npy
+         ...
+       --house_(# of house)
+         --(filename).npy
+         ...
+     --labels
+       --house_(# of house)
+         --(filename).npy
+         ...
+       --house_(# of house)
+         --(filename).npy
+         ...
