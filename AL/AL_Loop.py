@@ -79,7 +79,6 @@ class ALLoop:
     def train(self):
         """
         Training procedure of the model.
-        :return:
         """
 
         pass
@@ -87,7 +86,6 @@ class ALLoop:
     def test(self):
         """
         Testing procedure of the model.
-        :return:
         """
 
         metrics = None
